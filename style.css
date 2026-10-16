@@ -1,6 +1,8 @@
 
-/* HOLY YOUTH MOVEMENT — 2027 */
-/* Experimental Website */
+/* =====================================
+   HOLY YOUTH MOVEMENT — 2027
+   GLITCH LAB / EXPERIMENT 001
+   ===================================== */
 
 * {
   margin: 0;
@@ -9,24 +11,174 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  background: #000;
 }
 
 body {
   background: #000;
   color: #fff;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
-h1 {
-  font-size: clamp(2.5rem, 10vw, 8rem);
+.site-content {
+  width: 100%;
+}
+
+/* FULL-SCREEN SECTIONS */
+
+.hero,
+.experiment-section {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5vw;
+  overflow: hidden;
+}
+
+.hero {
+  min-height: 110svh;
+}
+
+.experiment-section {
+  min-height: 110svh;
+  border-top: 1px solid #333;
+}
+
+/* TYPOGRAPHY */
+
+.glitch-target {
+  position: relative;
+  width: 100%;
+  isolation: isolate;
+}
+
+.glitch-text {
+  position: relative;
+  display: block;
+  width: 100%;
+  font-size: clamp(3rem, 12vw, 12rem);
   font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.075em;
   text-transform: uppercase;
-  line-height: 0.9;
+  overflow-wrap: normal;
 }
 
-p {
-  font-size: 1rem;
-  margin-top: 2rem;
+/* RGB GLITCH LAYERS */
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: block;
+  white-space: pre-line;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.glitch-text::before {
+  color: #ff003c;
+  mix-blend-mode: screen;
+}
+
+.glitch-text::after {
+  color: #00eaff;
+  mix-blend-mode: screen;
+}
+
+/* ACTIVE GLITCH */
+
+body.is-glitching .glitch-text::before,
+body.is-glitching .glitch-text::after {
+  opacity: 0.75;
+}
+
+body.is-glitching .glitch-text::before {
+  transform: translate(
+    var(--glitch-x, -5px),
+    var(--glitch-y, 2px)
+  );
+
+  clip-path: polygon(
+    0 15%, 100% 15%,
+    100% 42%, 0 42%
+  );
+}
+
+body.is-glitching .glitch-text::after {
+  transform: translate(
+    var(--glitch-x-alt, 5px),
+    var(--glitch-y-alt, -2px)
+  );
+
+  clip-path: polygon(
+    0 55%, 100% 55%,
+    100% 82%, 0 82%
+  );
+}
+
+/* HERO FOOTER */
+
+.hero-bottom {
+  position: absolute;
+  bottom: 5vw;
+  left: 5vw;
+  right: 5vw;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* EXPERIMENT LABELS */
+
+.experiment-section p {
+  position: absolute;
+  bottom: 5vw;
+  left: 5vw;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .hero,
+  .experiment-section {
+    padding: 4vw;
+  }
+
+  .glitch-text {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    letter-spacing: -0.07em;
+  }
+
+  .hero-bottom,
+  .experiment-section p {
+    bottom: 6vw;
+    font-size: 0.6rem;
+  }
+
+  .hero-bottom {
+    left: 4vw;
+    right: 4vw;
+  }
+
+  .experiment-section p {
+    left: 4vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-text::before,
+  .glitch-text::after {
+    display: none;
+  }
 }
